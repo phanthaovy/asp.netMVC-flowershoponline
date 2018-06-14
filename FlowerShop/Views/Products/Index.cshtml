@@ -1,0 +1,137 @@
+﻿@model PagedList.IPagedList<FlowerShop.Models.Product>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Admin/AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("searching")
+        <input type="submit" value="Search" />
+    </p>
+}
+<table class="table">
+    <tr>
+        <th>
+          ID
+        </th>
+        <th>
+            @Html.ActionLink("Product Name", "Index", new { sortOrder = ViewBag.NameSort })
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+           Category
+        </th>
+        <th>
+          Product Photo
+        </th>
+        <th>
+           Origin Quantity
+        </th>
+        <th>
+            Remain Quantity
+        </th>
+        <th>
+          Product Date
+        </th>
+        <th>
+            Origin Price
+        </th>
+        <th>
+           Final Price
+        </th>
+        <th></th>
+    </tr>
+    <tbody>
+@if (Model.Count() == 0)
+{
+    <tr>
+        <td colspan="3" style="color:red">
+            No result found
+        </td>
+    </tr>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @foreach (var photo in item.Photos)
+                {
+                    <img src="@photo.PhotoName" style="width:125px;height:auto;" />
+                }
+            </td>
+            <td>
+                @foreach (var quantity in item.Quantities)
+                {
+
+                    @quantity.Origin
+                }
+            </td>
+            <td>
+                @foreach (var quantity in item.Quantities)
+                {
+                    @quantity.Remain
+                }
+            </td>
+            <td>
+                @foreach (var quantity in item.Quantities)
+                {
+                    @quantity.Product_Date
+                }
+            </td>
+            <td>
+                    @*@foreach (var price in item.Prices)
+                    {
+                        @price.Origin_Price
+                    }*@
+                </td>
+                <td>
+                    @*@foreach (var price in item.Prices)
+                    {
+                        @price.Final_Price
+                    }*@
+                </td>
+            <td></td>
+            <td></td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+}
+    </tbody>
+
+
+</table>
+
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

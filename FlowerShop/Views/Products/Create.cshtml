@@ -1,0 +1,103 @@
+﻿@model FlowerShop.Models.Product
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Admin/AdminLayout.cshtml";
+}
+
+<h2>Create Product</h2>
+
+@using (Html.BeginForm("Create","Products",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+  
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category_ID, "Category_ID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("Category_ID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Category_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">Origin Quantity</div>
+            <div class="col-md-10">
+                <input type="number" name="origin" id="origin" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">Origin_Price</div>
+            <div class="col-md-10">
+                <input type="number" name="origin_price" id="origin_price" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">Promotion_Price(%)</div>
+            <div class="col-md-10">
+                <input type="number" name="promotion_price" id="promotion_price" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">Product_Date</div>
+            <div class="col-md-10">
+                <input type="datetime" name="product_date" id="product_date" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">Product Image</div>
+            <div class="col-md-10">
+               <input type="file" name="file" id="file" onchange="show(this)"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <img id="user_img" height="100" width="90" style="border:solid" />
+            </div>
+        </div>
+
+     
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#user_img').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

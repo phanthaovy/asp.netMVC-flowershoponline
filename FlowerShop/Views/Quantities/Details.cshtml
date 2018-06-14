@@ -1,0 +1,51 @@
+﻿@model FlowerShop.Models.Quantity
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Admin/AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Quantity</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Origin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Origin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remain)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remain)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
